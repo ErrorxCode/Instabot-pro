@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_16
+    targetCompatibility = JavaVersion.VERSION_16
+}
+
+dependencies {
+    implementation project(path: ':EasyInsta')
+    implementation group: 'me.tongfei', name: 'progressbar', version: '0.9.3'
+}
+
+
+mainClassName = "com.insta.bot.Main"
+
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        exclude '**/module-info.class'
+        exclude "META-INF/*"
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
