@@ -20,9 +20,9 @@ the java.
 
 *Jar = without java, exe = with java*
 
-<a href="https://github.com/ErrorxCode/InstaBot-BTK/releases/download/v1.5/Instabot-jar.zip"><img alt="Download jar" height=40 src="https://dabuttonfactory.com/button.png?t=Download jar&f=Open+Sans-Bold&ts=25&tc=fff&hp=45&vp=20&c=11&bgt=unicolored&bgc=15d798"></a>
+<a href="https://github.com/ErrorxCode/InstaBot-BTK/releases/download/v1.5/Instabot_universal-jar.zip"><img alt="Download jar" height=40 src="https://dabuttonfactory.com/button.png?t=Download jar&f=Open+Sans-Bold&ts=25&tc=fff&hp=45&vp=20&c=11&bgt=unicolored&bgc=15d798"></a>
   
-<a href="https://github.com/ErrorxCode/InstaBot-BTK/releases/download/v1.5/Instabot_bundled-jre.zip"><img alt="Download exe" height=40 src="https://dabuttonfactory.com/button.png?t=Download+exe&f=Ubuntu&ts=25&tc=0f0&hp=45&vp=20&c=11&bgt=unicolored&bgc=fff&bs=1&bc=0f0"></a>
+<a href="https://github.com/ErrorxCode/InstaBot-BTK/releases/download/v1.5/Instabot_windows-jre.rar"><img alt="Download exe" height=40 src="https://dabuttonfactory.com/button.png?t=Download+exe&f=Ubuntu&ts=25&tc=0f0&hp=45&vp=20&c=11&bgt=unicolored&bgc=fff&bs=1&bc=0f0"></a>
 
 After downloading, you can run it as below:
 
