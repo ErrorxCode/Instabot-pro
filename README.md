@@ -40,6 +40,7 @@ or just double Click it.
 
 - Fast then others (as written in java)
 - **Supports** sending messages
+- **Supports** deleting messages
 - **Supports** spamming
 - **Supports** unfollowing
 - **Supports** dumping chat messages
@@ -70,9 +71,7 @@ Exceeding these limits may result in temporary ban of your instagrm account.
 4) Wait & watch... BOT will do his work
 
 
-**Note :** Exception are not handled in the program, so it will just
-close as anythings gone wrong. Even if you answer a alphabet instead of a number
-while selecting option
+**Note :** You can find all the error logs in 'logs.txt' file.
 
 
 ### Perticular option usage
@@ -93,8 +92,8 @@ Enter username : @x__coder__x
 Enter spam count : 20
 ```
 
-#### Dump chat
-Use this option to save all your direct chat into a text file.
+#### Dumping/Deleting chat
+Use this option to save all your direct chat into *chat.txt*.
 
 -> Enter the target 🎯 person username of whome you want to dump chat
 ```
@@ -122,6 +121,7 @@ for example, if you enter 3, it will save last 3 messages from the chat.
 
 -> In 3rd option, I don't need to explain it. Yhe, it does what the name suggest.
 
+***Deleting*** is also same.
 
 #### Unfollow all
 This option will unfollow all your folloings. You can also exclude some if you want.
