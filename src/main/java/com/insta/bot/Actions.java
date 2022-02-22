@@ -28,10 +28,10 @@ public class Actions {
             progressBar.step();
             counter++;
             if (counter == progressBar.getMax()) {
-                progressBar.close();
-                Main.showMenu();
-                counter = 0;
                 Main.clear();
+                progressBar.close();
+                counter = 0;
+                scanner.nextLine();
             }
         }
 
@@ -107,7 +107,6 @@ public class Actions {
     static void dumpChat() {
         System.out.print("Enter target username : ");
         String username = scanner.nextLine();
-        Main.clear();
         System.out.println("""
                 ---------- [ DUMPING OPTIONS ]-----------
                 1. Dump from particular message
@@ -117,7 +116,7 @@ public class Actions {
 
         System.out.print("Enter option number : ");
         int option = scanner.nextInt();
-        int count = 0;
+        int count;
         AtomicReference<Exception> exception = new AtomicReference<>();
         AtomicReference<List<String>> chat = new AtomicReference<>();
 
@@ -146,6 +145,16 @@ public class Actions {
                         else
                             exception.set((Exception) task.getException());
                     });
+        } else if (option == 3){
+            System.out.println("Dumping. Please wait...");
+            instagram.getDirect(username)
+                    .getChatMessages(0, null)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful())
+                            chat.set(task.getValue());
+                        else
+                            exception.set((Exception) task.getException());
+                    });
         } else
             Main.exit("Invalid option. exiting...");
 
@@ -155,11 +164,12 @@ public class Actions {
                 PrintWriter writer = new PrintWriter("chat.txt");
                 chat.get().forEach(writer::println);
                 writer.close();
+                scanner.nextLine();
             } else {
-                System.out.println("An error occurred while dumping message. Logs saved to 'logs.txt'");
                 PrintWriter writer = new PrintWriter("logs.txt");
                 writer.println(exception.get().getLocalizedMessage());
                 writer.close();
+                Main.exit("An error occurred while dumping message. Logs saved to 'logs.txt'");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -191,8 +201,10 @@ public class Actions {
                 progressBar.close();
             }).addOnFailureListener(exception -> {
                 writer.println(exception.getLocalizedMessage());
+                Main.exit("Something went wrong. See logs for more info.");
             });
             writer.close();
+            scanner.nextLine();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -202,5 +214,63 @@ public class Actions {
         System.out.println("Logging out...");
         instagram.clearCache(new File(System.getProperty("user.dir")));
         System.exit(1);
+    }
+
+
+    static void deleteMessages(){
+        System.out.print("Enter target username : ");
+        String username = scanner.nextLine();
+        System.out.println("""
+                ---------- [ Deleting OPTIONS ]-----------
+                1. Delete from particular message
+                2. Delete 'n' number of messages
+                3. Delete All messages (full chat)
+                """);
+
+        System.out.print("Enter option number : ");
+        int option = scanner.nextInt();
+        int count;
+
+        try {
+            PrintWriter writer = new PrintWriter("logs.txt");
+            Instagram.OnMessageActionCallback callback = new Instagram.OnMessageActionCallback() {
+                @Override
+                public void onSuccess(String message) {
+                    System.out.println("[✔] '" + message + "' unsent");
+                }
+
+                @Override
+                public void onFailed(Exception exception) {
+                    System.out.println("A message was not deleted. See logs for more info");
+                    writer.println(exception.getLocalizedMessage());
+                }
+
+                @Override
+                public void onProgress(int percentage) {
+
+                }
+            };
+            scanner.nextLine();
+            if (option == 1) {
+                System.out.print("Enter message from where to delete : ");
+                scanner.nextLine();
+                String message = scanner.nextLine();
+                System.out.println("Deleting messages. Please wait...");
+
+                instagram.getDirect(username).deleteMessagesFrom(message, Instagram.FREQUENCY_FIRST,callback);
+            } else if (option == 2) {
+                System.out.print("Enter no. of messages to delete : ");
+                count = scanner.nextInt();
+                System.out.println("Deleting. Please wait...");
+                progressBar = new ProgressBar("Deleting messages",count);
+                instagram.getDirect(username).deleteMessages(count,spamListener);
+            } else if (option == 3){
+                System.out.println("Deleting. Please wait...");
+                instagram.getDirect(username).deleteMessages(0, callback);
+            } else
+                Main.exit("Invalid option. exiting...");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

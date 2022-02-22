@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
     protected static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> Main.exit(e instanceof InputMismatchException ? "Please enter a valid option" : "An unknown error occurred"));
         Actions.performLogin();
         type("""
@@ -18,7 +18,10 @@ public class Main {
                 Remember the limits [60 follow/unfollow/comment/etc per hour]. If you go beyond this limit,then instagram consider it spamming and may block you
                                 
                 """);
-        showMenu();
+
+        while (true){
+            showMenu();
+        }
     }
 
     static void showMenu() {
@@ -41,22 +44,23 @@ public class Main {
                 1. Spam group
                 2. Spam DM
                 3. Dump chat
-                4. Unfollow all
-                5. Logout
-                6. About InstaBot
+                4. Delete messages
+                5. Unfollow all
+                6. Logout
+                7. About InstaBot
                 """);
         System.out.print("Enter option number : ");
-
         int option = scanner.nextInt();
-        scanner.nextLine();
         clear();
+
         switch (option) {
             case 1 -> Actions.spamGroup();
             case 2 -> Actions.spamDM();
             case 3 -> Actions.dumpChat();
-            case 4 -> Actions.unfollowAll();
-            case 5 -> Actions.logout();
-            case 6 -> about();
+            case 4 -> Actions.deleteMessages();
+            case 5 -> Actions.unfollowAll();
+            case 6 -> Actions.logout();
+            case 7 -> about();
             default -> {
                 System.out.println("[!] Invalid option. Exiting...");
                 System.exit(-1);
@@ -89,7 +93,7 @@ public class Main {
         for (char a : text.toCharArray()) {
             System.out.print(a);
             try {
-                Thread.sleep(25);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -103,6 +107,7 @@ public class Main {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             else
                 Runtime.getRuntime().exec("clear");
+
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
